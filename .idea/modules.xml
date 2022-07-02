@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/next-typescript-redux-saga-boilerplate.iml" filepath="$PROJECT_DIR$/.idea/next-typescript-redux-saga-boilerplate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/next-eslint-typescript-starter.iml" filepath="$PROJECT_DIR$/.idea/next-eslint-typescript-starter.iml" />
     </modules>
   </component>
 </project>
