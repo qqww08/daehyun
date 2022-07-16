@@ -13,6 +13,7 @@ module.exports = {
     "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:@next/next/recommended",
     "prettier",
   ],
   plugins: ["@typescript-eslint"],
@@ -34,5 +35,24 @@ module.exports = {
     "no-underscore-dangle": 0,
     "class-methods-use-this": 0,
     "react/function-component-definition": [2, { namedComponents: "arrow-function" }],
+    "import/order": [
+      "error",
+      {
+        groups: ["builtin", "external", ["parent", "sibling"], "index", "object"],
+        pathGroups: [
+          {
+            pattern: "~/**",
+            group: "internal",
+            position: "after",
+          },
+        ],
+        pathGroupsExcludedImportTypes: ["react"],
+        alphabetize: {
+          order: "asc",
+          caseInsensitive: true,
+        },
+        "newlines-between": "always",
+      },
+    ],
   },
 };

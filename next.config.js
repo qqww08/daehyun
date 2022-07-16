@@ -1,10 +1,9 @@
-const withPlugins = require("next-compose-plugins");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
-
+const withPlugins = require("next-compose-plugins");
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  swcMinify: true,
   reactStrictMode: true,
   compiler: {
     // ssr and displayName are configured by default
