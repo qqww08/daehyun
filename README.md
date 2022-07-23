@@ -6,7 +6,7 @@ Install Docker on your machine.
 
 # NextJS Boilerplate
 
-- nextJS 12.1.0
+- nextJS 12.2.0
 - react 18.0.0-rc.0
 - typescript
 - styled-components
