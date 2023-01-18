@@ -15,3 +15,5 @@ only yarn berry
 - prettierrc 
 - eslint
 - yarn berry 3.3.1
+- husky
+- lint-saged
