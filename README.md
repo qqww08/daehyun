@@ -1,31 +1,17 @@
-## Using Docker
-Install Docker on your machine.
-1. Build your container: `docker build -t yarn-docker .`
-2. Run your container: `docker run -p 3000:3000  yarn-docker`
+## Start
+only yarn 
+```shell
+1. yarn 
+2. yarn dev
+```
+    
+## NextJS Boilerplate
 
-
-# NextJS Boilerplate
-
-- nextJS 12.2.0
-- react 18.0.0-rc.0
-- typescript
-- styled-components
-- axios
-- prettierrc
+- nextJS 13.1.2
+- react 18.2.0
+- typescript 4.9.4
+- styled-components 5.3.6
+- axios 1.2.3
+- prettierrc 
 - eslint
-- next-bundle-analyzer
-- yarn berry 3.2.0
-
-##branch/lib-recoil
-- recoil
-
-##branch/lib-redux
-- redux
-- redux-saga
-- next-redux-wrapper
-- redux-devtools-extension
-
-##branch/lib-swr
-- swr
-
-
+- yarn berry 3.3.1
