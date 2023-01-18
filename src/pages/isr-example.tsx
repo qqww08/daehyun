@@ -1,5 +1,4 @@
 import type { GetStaticProps } from "next";
-import Image from "next/image";
 
 import type { IUsers } from "~/interfaces/users";
 import { fetcher } from "~/utils/axios";
@@ -15,7 +14,7 @@ const IsrExample = (props: Props) => {
       {userData.map((item) => (
         <div key={item.id}>
           <p>id {item.id}</p>
-          <Image src={item.avatar_url} width={50} height={50} alt={item.login} />
+          <img src={item.avatar_url} width={50} height={50} alt={item.login} />
         </div>
       ))}
     </section>
