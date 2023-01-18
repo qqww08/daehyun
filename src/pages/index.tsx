@@ -7,7 +7,7 @@ const Index = () => {
   const first = useRef(null);
   return (
     <__Wrapper>
-      <Button ref={first}>asd</Button>
+      <Button ref={first}>DefaultButton</Button>
       <NextLink href="/ssr-example">NEXT LINK</NextLink>
       <SafeLink href="https://www.naver.com">SafeLink</SafeLink>
     </__Wrapper>
