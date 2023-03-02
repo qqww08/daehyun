@@ -4,10 +4,12 @@ import styled from "styled-components";
 
 import { format } from "~/utils";
 import { Pagination, Switch, Table } from "~/views/components";
+import { useErrorAlert } from "~/views/components/ErrorAlertProvider";
 import { type TCampaignObjective, useCampaigns } from "~/views/swr/campaigns";
 
 const MainPageCampaign = () => {
   const router = useRouter();
+  const setErrorAlert = useErrorAlert();
 
   const {
     data: campaignData,
@@ -40,7 +42,7 @@ const MainPageCampaign = () => {
        * */
       //  campaignMutate();
     } catch (e) {
-      alert(e || "에러입니다.");
+      setErrorAlert(true);
     }
   };
   const handlePageChange = (page: number) => {

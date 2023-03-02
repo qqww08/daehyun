@@ -7,19 +7,25 @@ export interface ModalProps {
   isVisible: boolean;
   onClose: () => void;
   children: ReactNode;
+  zIndex?: number;
 }
-export const Modal = ({ isVisible, onClose, children }: ModalProps) => {
+export const Modal = ({
+  isVisible,
+  onClose,
+  children,
+  zIndex = 110,
+}: ModalProps) => {
   return (
     <Portal>
-      <Container visible={isVisible}>
+      <Container visible={isVisible} zIndex={zIndex}>
         <Overlay visible={isVisible} onClick={() => onClose()} />
         <Box visible={isVisible}>{isVisible && children}</Box>
       </Container>
     </Portal>
   );
 };
-const Container = styled.div<{ visible: boolean }>`
-  ${({ visible }) =>
+const Container = styled.div<{ visible: boolean; zIndex?: number }>`
+  ${({ visible, zIndex }) =>
     visible &&
     css`
       position: fixed;
@@ -27,7 +33,7 @@ const Container = styled.div<{ visible: boolean }>`
       left: 0;
       right: 0;
       bottom: 0;
-      z-index: 110;
+      z-index: ${zIndex};
       display: flex;
       align-items: center;
       justify-content: center;

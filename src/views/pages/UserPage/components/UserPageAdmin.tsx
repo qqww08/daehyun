@@ -7,6 +7,7 @@ import styled from "styled-components";
 
 import { regex } from "~/utils";
 import { Button, Modal, Pagination, Table } from "~/views/components";
+import { useErrorAlert } from "~/views/components/ErrorAlertProvider";
 import { useUser } from "~/views/swr/users";
 
 interface Form {
@@ -17,6 +18,8 @@ interface Form {
 }
 const UserPageAdmin = () => {
   const router = useRouter();
+  const setErrorAlert = useErrorAlert();
+
   const {
     register,
     handleSubmit,
@@ -47,15 +50,16 @@ const UserPageAdmin = () => {
   };
 
   const handleFormSubmit = async (data) => {
+    console.log(data);
     try {
       const body = {
         name: data.name,
       };
-      await axios.post(`/api/users/${data.id}`, body);
+      await axios.post(`/api/users/${userEmail.id}`, body);
       handleCloseClick();
       userMutate();
     } catch (e) {
-      alert(e);
+      setErrorAlert(true);
     }
   };
 

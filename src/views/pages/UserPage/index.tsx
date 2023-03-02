@@ -5,7 +5,8 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
 import { regex } from "~/utils";
-import { Button, Modal } from "~/views/components";
+import { Button, ErrorAlertProvider, Modal } from "~/views/components";
+import { useErrorAlert } from "~/views/components/ErrorAlertProvider";
 import GnbHeader from "~/views/components/Header/GnbHeader";
 import UserPageAdmin from "~/views/pages/UserPage/components/UserPageAdmin";
 import { useUser } from "~/views/swr/users";
@@ -35,6 +36,8 @@ interface Form {
 }
 const UserPage = () => {
   const { mutate: userMutate } = useUser();
+  const setErrorAlert = useErrorAlert();
+
   const {
     register,
     handleSubmit,
@@ -58,7 +61,7 @@ const UserPage = () => {
       const res: any = await axios.get(`/api/users/${email}/exists`);
       return res.data;
     } catch (e) {
-      alert(e);
+      setErrorAlert(true);
     }
   };
   const handleFormSubmit = async (data) => {
@@ -67,115 +70,119 @@ const UserPage = () => {
       userMutate();
       handleCloseClick();
     } catch (e) {
-      alert(e);
+      setErrorAlert(true);
     }
   };
   return (
-    <MainContainer>
-      <Title>사용자 관리</Title>
-      <CreateButton onClick={handleCreateClick}>생성</CreateButton>
-      <UserPageAdmin />
-      <Modal isVisible={isVisible} onClose={handleCloseClick}>
-        <UserCreateModalBox>
-          <UserCreateModalHeader>
-            <UserCreateModalTitle>사용자 생성</UserCreateModalTitle>
-            <UserCreateModalCloseButton onClick={handleCloseClick}>
-              X
-            </UserCreateModalCloseButton>
-          </UserCreateModalHeader>
-          <Form onSubmit={handleSubmit(handleFormSubmit)}>
-            <FormBox>
-              <FormLabel>아이디</FormLabel>
-              <FormInputBox>
-                <FormInput
-                  {...register("email", {
-                    required: errorMessages.email.validate,
-                    pattern: {
-                      value: regex.EMAIL,
-                      message: errorMessages.email.correct,
-                    },
-                    minLength: {
-                      value: 1,
-                      message: errorMessages.email.correct, // JS only: <p>error message</p> TS only support string
-                    },
-                    maxLength: {
-                      value: 50,
-                      message: errorMessages.email.correct, // JS only: <p>error message</p> TS only support string
-                    },
-                    validate: {
-                      checkUrl: async (email) =>
-                        (await handleExistsCheck(email)) ||
-                        ": 이미 사용중인 이메일입니다. 다른 이메일을 입력하세요.",
-                    },
-                  })}
-                />
-                {errors?.email && (
-                  <FormError>{errors?.email?.message}</FormError>
-                )}
-              </FormInputBox>
-            </FormBox>
-            <FormBox>
-              <FormLabel>비밀번호</FormLabel>
+    <ErrorAlertProvider>
+      <MainContainer>
+        <Title>사용자 관리</Title>
+        <CreateButton onClick={handleCreateClick}>생성</CreateButton>
+        <UserPageAdmin />
+        <Modal isVisible={isVisible} onClose={handleCloseClick}>
+          <UserCreateModalBox>
+            <UserCreateModalHeader>
+              <UserCreateModalTitle>사용자 생성</UserCreateModalTitle>
+              <UserCreateModalCloseButton onClick={handleCloseClick}>
+                X
+              </UserCreateModalCloseButton>
+            </UserCreateModalHeader>
+            <Form onSubmit={handleSubmit(handleFormSubmit)}>
+              <FormBox>
+                <FormLabel>아이디</FormLabel>
+                <FormInputBox>
+                  <FormInput
+                    {...register("email", {
+                      required: errorMessages.email.validate,
+                      pattern: {
+                        value: regex.EMAIL,
+                        message: errorMessages.email.correct,
+                      },
+                      minLength: {
+                        value: 1,
+                        message: errorMessages.email.correct, // JS only: <p>error message</p> TS only support string
+                      },
+                      maxLength: {
+                        value: 50,
+                        message: errorMessages.email.correct, // JS only: <p>error message</p> TS only support string
+                      },
+                      validate: {
+                        checkUrl: async (email) =>
+                          (await handleExistsCheck(email)) ||
+                          ": 이미 사용중인 이메일입니다. 다른 이메일을 입력하세요.",
+                      },
+                    })}
+                  />
+                  {errors?.email && (
+                    <FormError>{errors?.email?.message}</FormError>
+                  )}
+                </FormInputBox>
+              </FormBox>
+              <FormBox>
+                <FormLabel>비밀번호</FormLabel>
 
-              <FormInputBox>
-                <FormInput
-                  type={"password"}
-                  {...register("password", {
-                    required: errorMessages.pass.validate,
-                    pattern: {
-                      value: regex.PASS,
-                      message: errorMessages.pass.phraseCheck,
-                    },
-                  })}
-                  placeholder={"영문, 숫자, 특수문자 조합 8~15자"}
-                />
-                {errors?.password && (
-                  <FormError>{errors?.password?.message}</FormError>
-                )}
-              </FormInputBox>
-            </FormBox>
-            <FormBox>
-              <FormLabel>비밀번호 확인</FormLabel>
+                <FormInputBox>
+                  <FormInput
+                    type={"password"}
+                    {...register("password", {
+                      required: errorMessages.pass.validate,
+                      pattern: {
+                        value: regex.PASS,
+                        message: errorMessages.pass.phraseCheck,
+                      },
+                    })}
+                    placeholder={"영문, 숫자, 특수문자 조합 8~15자"}
+                  />
+                  {errors?.password && (
+                    <FormError>{errors?.password?.message}</FormError>
+                  )}
+                </FormInputBox>
+              </FormBox>
+              <FormBox>
+                <FormLabel>비밀번호 확인</FormLabel>
 
-              <FormInputBox>
-                <FormInput
-                  type={"password"}
-                  {...register("repeat_password", {
-                    required: errorMessages.pass.validate,
-                    validate: (value) =>
-                      value === passwordWatch ||
-                      "비밀번호가 일치하지 않습니다. ",
-                  })}
-                />
-                {errors?.repeat_password && (
-                  <FormError>{errors?.repeat_password?.message}</FormError>
-                )}
-              </FormInputBox>
-            </FormBox>
-            <FormBox>
-              <FormLabel>이름</FormLabel>
+                <FormInputBox>
+                  <FormInput
+                    type={"password"}
+                    {...register("repeat_password", {
+                      required: errorMessages.pass.validate,
+                      validate: (value) =>
+                        value === passwordWatch ||
+                        "비밀번호가 일치하지 않습니다. ",
+                    })}
+                  />
+                  {errors?.repeat_password && (
+                    <FormError>{errors?.repeat_password?.message}</FormError>
+                  )}
+                </FormInputBox>
+              </FormBox>
+              <FormBox>
+                <FormLabel>이름</FormLabel>
 
-              <FormInputBox>
-                <FormInput
-                  {...register("name", {
-                    required: errorMessages.name.validate,
-                    pattern: {
-                      value: regex.NAME,
-                      message: errorMessages.name.correct,
-                    },
-                  })}
-                />
-                {errors?.name && <FormError>{errors?.name?.message}</FormError>}
-              </FormInputBox>
-            </FormBox>
-            <ButtonArea>
-              <CancelButton onClick={handleCloseClick}>취소</CancelButton>
-              <SubmitButton type={"submit"}>생성</SubmitButton>
-            </ButtonArea>
-          </Form>
-        </UserCreateModalBox>
-      </Modal>
-    </MainContainer>
+                <FormInputBox>
+                  <FormInput
+                    {...register("name", {
+                      required: errorMessages.name.validate,
+                      pattern: {
+                        value: regex.NAME,
+                        message: errorMessages.name.correct,
+                      },
+                    })}
+                  />
+                  {errors?.name && (
+                    <FormError>{errors?.name?.message}</FormError>
+                  )}
+                </FormInputBox>
+              </FormBox>
+              <ButtonArea>
+                <CancelButton onClick={handleCloseClick}>취소</CancelButton>
+                <SubmitButton type={"submit"}>생성</SubmitButton>
+              </ButtonArea>
+            </Form>
+          </UserCreateModalBox>
+        </Modal>
+      </MainContainer>
+    </ErrorAlertProvider>
   );
 };
 export default UserPage;
