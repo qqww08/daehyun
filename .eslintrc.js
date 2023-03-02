@@ -18,6 +18,8 @@ module.exports = {
   ],
   plugins: ["@typescript-eslint"],
   rules: {
+    "react/require-default-props": 0,
+    "import/prefer-default-export": 0,
     "no-restricted-exports": 0,
     "react/jsx-curly-brace-presence": 0,
     "@next/next/no-document-import-in-page": 0,

@@ -13,4 +13,8 @@ const ButtonRef = ({ children, type = "button", ...rest }: ButtonProps, ref: Ref
 };
 
 export const Button = forwardRef(ButtonRef);
-const ButtonStyled = styled.button``;
+const ButtonStyled = styled.button`
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+`;

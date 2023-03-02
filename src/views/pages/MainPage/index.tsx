@@ -1,7 +1,12 @@
 import GnbHeader from "~/views/components/Header/GnbHeader";
 
 const MainPage = () => {
-  return <GnbHeader />;
+  return (
+    <>
+      <GnbHeader />
+      <div />
+    </>
+  );
 };
 
 export default MainPage;
