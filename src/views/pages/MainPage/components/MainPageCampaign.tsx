@@ -1,10 +1,9 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import styled from "styled-components";
 
 import { format } from "~/utils/formats";
-import { Pagination, Switch } from "~/views/components";
+import { Pagination, Switch, Table } from "~/views/components";
 import { type TCampaignObjective, useCampaigns } from "~/views/swr/campaigns";
 
 const MainPageCampaign = () => {
@@ -40,7 +39,7 @@ const MainPageCampaign = () => {
        *  TODO campaignMutate();
        * */
     } catch (e) {
-      alert(e);
+      alert(e || "에러입니다.");
     }
   };
   const handlePageChange = (page: number) => {
@@ -53,53 +52,53 @@ const MainPageCampaign = () => {
     <Container>
       <Title>캠페인 관리</Title>
       <Table>
-        <TableHeaderGroup>
-          <TableRow>
-            <TableHeaderCell align={"center"}>상태</TableHeaderCell>
-            <TableHeaderCell align={"left"}>캠페인명</TableHeaderCell>
-            <TableHeaderCell align={"left"}>캠페인 목적</TableHeaderCell>
-            <TableHeaderCell align={"right"}>노출수</TableHeaderCell>
-            <TableHeaderCell align={"right"}>클릭수</TableHeaderCell>
-            <TableHeaderCell align={"right"}>CTR</TableHeaderCell>
-            <TableHeaderCell align={"right"}>동영상조회수</TableHeaderCell>
-            <TableHeaderCell align={"right"}>VTR</TableHeaderCell>
-          </TableRow>
-        </TableHeaderGroup>
-        <TableRowGroup>
+        <Table.Head>
+          <Table.Row>
+            <Table.HeadCell align={"center"}>상태</Table.HeadCell>
+            <Table.HeadCell align={"left"}>캠페인명</Table.HeadCell>
+            <Table.HeadCell align={"left"}>캠페인 목적</Table.HeadCell>
+            <Table.HeadCell align={"right"}>노출수</Table.HeadCell>
+            <Table.HeadCell align={"right"}>클릭수</Table.HeadCell>
+            <Table.HeadCell align={"right"}>CTR</Table.HeadCell>
+            <Table.HeadCell align={"right"}>동영상조회수</Table.HeadCell>
+            <Table.HeadCell align={"right"}>VTR</Table.HeadCell>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
           {campaignData.content.map((item) => {
             return (
-              <TableRow key={item.id}>
-                <TableCell align={"center"}>
+              <Table.Row key={item.id}>
+                <Table.Cell align={"center"}>
                   <Switch
                     checked={item.enabled}
                     onCheckedChange={(check) =>
                       handleSwitchChange(check, item.id)
                     }
                   />
-                </TableCell>
-                <TableCell align={"left"}>{item.name}</TableCell>
-                <TableCell align={"left"}>
+                </Table.Cell>
+                <Table.Cell align={"left"}>{item.name}</Table.Cell>
+                <Table.Cell align={"left"}>
                   {campaignObj[item.campaign_objective]}
-                </TableCell>
-                <TableCell align={"right"}>
+                </Table.Cell>
+                <Table.Cell align={"right"}>
                   {format.comma(item.impressions)}
-                </TableCell>
-                <TableCell align={"right"}>
+                </Table.Cell>
+                <Table.Cell align={"right"}>
                   {format.comma(item.clicks)}
-                </TableCell>
-                <TableCell align={"right"}>
+                </Table.Cell>
+                <Table.Cell align={"right"}>
                   {format.floatToPercent(item.ctr)}
-                </TableCell>
-                <TableCell align={"right"}>
+                </Table.Cell>
+                <Table.Cell align={"right"}>
                   {format.comma(item.video_views)}
-                </TableCell>
-                <TableCell align={"right"}>
+                </Table.Cell>
+                <Table.Cell align={"right"}>
                   {format.floatToPercent(item.vtr)}
-                </TableCell>
-              </TableRow>
+                </Table.Cell>
+              </Table.Row>
             );
           })}
-        </TableRowGroup>
+        </Table.Body>
       </Table>
       <Pagination
         totalPages={campaignData.total_pages}
@@ -113,38 +112,4 @@ export default MainPageCampaign;
 const Container = styled.main``;
 const Title = styled.h2`
   padding: 15px;
-`;
-const Table = styled.table`
-  width: 100%;
-  table-layout: auto;
-  display: table;
-`;
-const TableHeaderGroup = styled.thead`
-  display: table-header-group;
-  padding: 0 10px;
-`;
-const TableHeaderCell = styled.th<{ align: "center" | "left" | "right" }>`
-  height: 40px;
-  display: table-cell;
-  vertical-align: middle;
-  text-align: ${({ align }) => align};
-  color: ${({ theme }) => theme.color.gray2};
-  border-top: 1px solid ${({ theme }) => theme.color.gray};
-  border-bottom: 1px solid ${({ theme }) => theme.color.gray};
-  padding: 10px;
-`;
-const TableRowGroup = styled.tbody`
-  display: table-row-group;
-  padding: 0 10px;
-`;
-const TableRow = styled.tr`
-  display: table-row;
-`;
-const TableCell = styled.td<{ align: "center" | "left" | "right" }>`
-  display: table-cell;
-  height: 40px;
-  vertical-align: middle;
-  text-align: ${({ align }) => align};
-  border-bottom: 1px solid ${({ theme }) => theme.color.gray};
-  padding: 10px;
 `;
