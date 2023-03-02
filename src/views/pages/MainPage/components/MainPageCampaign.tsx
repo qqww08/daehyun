@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
-import { format } from "~/utils/formats";
+import { format } from "~/utils";
 import { Pagination, Switch, Table } from "~/views/components";
 import { type TCampaignObjective, useCampaigns } from "~/views/swr/campaigns";
 
@@ -33,11 +33,12 @@ const MainPageCampaign = () => {
         enabled: checked,
       };
       await axios.patch(`/api/campaigns/${id}`, body);
-      /** API를 정상적으로 받아서 사용할 경우
+      /** TODO
+       * API를 정상적으로 받아서 사용할 경우
        *  patch 로 데이터 수정을 요청하고 useSWR mutate을 사용해서
        * list api 를 재호출해서 최신 데이터를 가져옵니다.
-       *  TODO campaignMutate();
        * */
+      //  campaignMutate();
     } catch (e) {
       alert(e || "에러입니다.");
     }
@@ -109,7 +110,7 @@ const MainPageCampaign = () => {
 };
 
 export default MainPageCampaign;
-const Container = styled.main``;
+const Container = styled.section``;
 const Title = styled.h2`
   padding: 15px;
 `;

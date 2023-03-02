@@ -18,6 +18,8 @@ module.exports = {
   ],
   plugins: ["@typescript-eslint"],
   rules: {
+    "consistent-return": 0,
+    "no-useless-escape": 0,
     "react/no-array-index-key": 0,
     "react/require-default-props": 0,
     "import/prefer-default-export": 0,
@@ -28,7 +30,11 @@ module.exports = {
     "react/jsx-filename-extension": 0,
     "no-use-before-define": 0,
     "@typescript-eslint/no-var-requires": 0,
-    "@typescript-eslint/quotes": [2, "double", { avoidEscape: true, allowTemplateLiterals: true }],
+    "@typescript-eslint/quotes": [
+      2,
+      "double",
+      { avoidEscape: true, allowTemplateLiterals: true },
+    ],
     "import/no-extraneous-dependencies": 0,
     "func-names": 0,
     "react/jsx-pascal-case": 0,
@@ -39,11 +45,20 @@ module.exports = {
     "@typescript-eslint/no-use-before-define": 0,
     "no-underscore-dangle": 0,
     "class-methods-use-this": 0,
-    "react/function-component-definition": [2, { namedComponents: "arrow-function" }],
+    "react/function-component-definition": [
+      2,
+      { namedComponents: "arrow-function" },
+    ],
     "import/order": [
       "error",
       {
-        groups: ["builtin", "external", ["parent", "sibling"], "index", "object"],
+        groups: [
+          "builtin",
+          "external",
+          ["parent", "sibling"],
+          "index",
+          "object",
+        ],
         pathGroups: [
           {
             pattern: "~/**",

@@ -6,6 +6,7 @@ const color = {
   black: "#000000",
   gray: "#eaeaea",
   gray2: "#afafaf",
+  red: "#d71212",
 };
 export type TColor = typeof color;
 const themes: DefaultTheme = {

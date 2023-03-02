@@ -1,2 +1,3 @@
 export * from "./fetcher";
-export * from "./floatToPercent";
+export * from "./formats";
+export * from "./regex";

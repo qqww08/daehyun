@@ -29,7 +29,7 @@ folder tree
 │  ├─ pages
 │  │  ├─ _app.tsx
 │  │  ├─ _document.tsx
-│  │  ├─ index.tsx
+│  │  ├─ Table.tsx
 │  │  ├─ isr-example.tsx
 │  │  └─ ssr-example.tsx
 │  ├─ styles
