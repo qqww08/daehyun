@@ -46,7 +46,6 @@ const UserEditModal = ({ onClose, userInfo }: Props) => {
        * list api 를 재호출해서 최신 데이터를 가져옵니다.
        *
        * */
-      //  userMutate();
       const body = {
         name: data.name,
       };
