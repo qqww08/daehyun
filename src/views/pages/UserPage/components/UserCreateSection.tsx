@@ -33,6 +33,8 @@ interface Form {
 
 const UserCreateSection = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isPassMasking, setIsPassMasking] = useState(true);
+  const [isRepeatPassMasking, setIsRepeatPassMasking] = useState(true);
 
   const { mutate: userMutate } = useUser();
   const setErrorAlert = useErrorAlert();
@@ -61,6 +63,12 @@ const UserCreateSection = () => {
       setErrorAlert(true);
       return "API 호출 실패";
     }
+  };
+  const handlePassMaskingClick = () => {
+    setIsPassMasking((prev) => !prev);
+  };
+  const handleRepeatPassMaskingClick = () => {
+    setIsRepeatPassMasking((prev) => !prev);
   };
   const handleFormSubmit = async (data) => {
     try {
@@ -118,7 +126,7 @@ const UserCreateSection = () => {
 
               <FormInputBox>
                 <FormInput
-                  type={"password"}
+                  type={isPassMasking ? "password" : "text"}
                   {...register("password", {
                     required: errorMessages.pass.validate,
                     pattern: {
@@ -131,6 +139,12 @@ const UserCreateSection = () => {
                 {errors?.password && (
                   <FormError>{errors?.password?.message}</FormError>
                 )}
+                <MaskingButton onClick={handlePassMaskingClick}>
+                  <img
+                    src={isPassMasking ? "/eye-hide.svg" : "/eye-show.svg"}
+                    alt={"eye"}
+                  />
+                </MaskingButton>
               </FormInputBox>
             </FormBox>
             <FormBox>
@@ -138,7 +152,7 @@ const UserCreateSection = () => {
 
               <FormInputBox>
                 <FormInput
-                  type={"password"}
+                  type={isRepeatPassMasking ? "password" : "text"}
                   {...register("repeat_password", {
                     required: errorMessages.pass.validate,
                     validate: (value) =>
@@ -149,6 +163,14 @@ const UserCreateSection = () => {
                 {errors?.repeat_password && (
                   <FormError>{errors?.repeat_password?.message}</FormError>
                 )}
+                <MaskingButton onClick={handleRepeatPassMaskingClick}>
+                  <img
+                    src={
+                      isRepeatPassMasking ? "/eye-hide.svg" : "/eye-show.svg"
+                    }
+                    alt={"eye"}
+                  />
+                </MaskingButton>
               </FormInputBox>
             </FormBox>
             <FormBox>
@@ -249,4 +271,11 @@ const CreateButton = styled(Button)`
   border-radius: 8px;
   background-color: ${({ theme }) => theme.color.main};
   color: ${({ theme }) => theme.color.white};
+`;
+const MaskingButton = styled(Button)`
+  position: absolute;
+  right: 0;
+  width: 50px;
+  height: 100%;
+  background-color: ${({ theme }) => theme.color.gray};
 `;
