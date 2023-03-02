@@ -4,7 +4,10 @@ import styled from "styled-components";
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
 }
-const ButtonRef = ({ children, type = "button", ...rest }: ButtonProps, ref: Ref<HTMLButtonElement>) => {
+const ButtonRef = (
+  { children, type = "button", ...rest }: ButtonProps,
+  ref: Ref<HTMLButtonElement>,
+) => {
   return (
     <ButtonStyled {...rest} type={type} ref={ref}>
       {children}

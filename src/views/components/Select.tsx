@@ -31,7 +31,9 @@ export const Select = <TSelectValue extends Value>({
 
   return (
     <SelectBox>
-      <SelectButton onClick={handleShowSelectClick}>{initialValue}</SelectButton>
+      <SelectButton onClick={handleShowSelectClick}>
+        {initialValue}
+      </SelectButton>
       {isVisible && (
         <SelectList>
           {value.map((item) => {
@@ -39,7 +41,9 @@ export const Select = <TSelectValue extends Value>({
               <SelectMenu key={item.value}>
                 <SelectMenuButton
                   active={item.name === initialValue}
-                  onClick={() => handleSelectClick({ value: item.value, name: item.name })}
+                  onClick={() =>
+                    handleSelectClick({ value: item.value, name: item.name })
+                  }
                 >
                   {item.name}
                 </SelectMenuButton>
@@ -90,6 +94,7 @@ const SelectMenuButton = styled(Button)<{ active: boolean }>`
   &:hover {
     background-color: rgba(76, 117, 206, 0.1);
   }
-  color: ${({ active, theme }) => (active ? theme.color.main : theme.color.black)};
+  color: ${({ active, theme }) =>
+    active ? theme.color.main : theme.color.black};
   font-weight: ${({ active }) => (active ? 700 : 400)};
 `;
