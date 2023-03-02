@@ -29,7 +29,6 @@ interface Params {
 export const useCampaigns = ({ page = 1 }: Params = {}): SWRResponse<
   PageList<ICampaignsContent>
 > => {
-  console.log(`page =>`, page);
   /** TODO
    * API를 정상적으로 받아서 사용할 경우 아래와 같이 사용되고
    * useSWR의 key값이 바뀌면서 재호출 하게 되며 새로운 데이터를 가져옵니다

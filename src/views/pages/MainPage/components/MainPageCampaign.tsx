@@ -1,16 +1,20 @@
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { format } from "~/utils";
 import { Pagination, Switch, Table } from "~/views/components";
 import { useErrorAlert } from "~/views/components/ErrorAlertProvider";
+import { roleSelectState } from "~/views/recoil";
 import { type TCampaignObjective, useCampaigns } from "~/views/swr/campaigns";
 
 const MainPageCampaign = () => {
   const router = useRouter();
+  const roleSelectValue = useRecoilValue(roleSelectState);
   const setErrorAlert = useErrorAlert();
 
+  const isViewer = roleSelectValue === "viewer";
   const {
     data: campaignData,
     isLoading,
@@ -39,6 +43,7 @@ const MainPageCampaign = () => {
        * API를 정상적으로 받아서 사용할 경우
        *  patch 로 데이터 수정을 요청하고 useSWR mutate을 사용해서
        * list api 를 재호출해서 최신 데이터를 가져옵니다.
+       *
        * */
       //  campaignMutate();
     } catch (e) {
@@ -73,6 +78,7 @@ const MainPageCampaign = () => {
               <Table.Row key={item.id}>
                 <Table.Cell align={"center"}>
                   <Switch
+                    disabled={isViewer}
                     checked={item.enabled}
                     onCheckedChange={(check) =>
                       handleSwitchChange(check, item.id)
