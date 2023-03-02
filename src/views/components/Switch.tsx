@@ -26,7 +26,8 @@ const SwitchArea = styled.div<{ checked: boolean }>`
   width: 40px;
   height: 22px;
   padding: 0 5px;
-  background-color: ${({ theme, checked }) => (checked ? theme.color.main : theme.color.gray)};
+  background-color: ${({ theme, checked }) =>
+    checked ? theme.color.main : theme.color.gray};
   transition: background-color 300ms;
 `;
 const SwitchThumb = styled.div<{ checked: boolean }>`
@@ -43,4 +44,8 @@ const SwitchInput = styled.input`
   opacity: 0;
   inset: 0px;
   z-index: 1;
+  cursor: pointer;
+  &:disabled {
+    cursor: no-drop;
+  }
 `;
