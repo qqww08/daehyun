@@ -7,11 +7,12 @@ import { useMe } from "~/views/swr/auth";
 
 const GnbUserBox = () => {
   const [isPopupShow, setIsPopupShow] = useState<boolean>(false);
-  const { data: meData } = useMe();
+  const { data: meData, isLoading } = useMe();
 
   const handlePopupClick = () => {
     setIsPopupShow((prev) => !prev);
   };
+  if (isLoading) return <div />;
   return (
     <UserBox>
       <PopupButton onClick={handlePopupClick}>{meData.email}</PopupButton>

@@ -3,23 +3,27 @@ import styled from "styled-components";
 
 import { Button } from "~/views/components/Button";
 
-interface IValue {
+interface Value {
   name: string;
   value: string;
 }
-export interface SelectProps {
-  value: IValue[];
-  defaultValue?: IValue;
-  onSelectClick: (val: IValue) => void;
+export interface SelectProps<TSelectValue> {
+  value: TSelectValue[] | Value[];
+  defaultValue?: TSelectValue | Value;
+  onSelectClick: (val: TSelectValue | Value) => void;
 }
-export const Select = ({ value, defaultValue, onSelectClick }: SelectProps) => {
+export const Select = <TSelectValue extends Value>({
+  value,
+  defaultValue,
+  onSelectClick,
+}: SelectProps<TSelectValue>) => {
   const [initialValue, setInitialValue] = useState<string>(defaultValue.name);
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const handleShowSelectClick = () => {
     setIsVisible((prev) => !prev);
   };
-  const handleSelectClick = (val: IValue) => {
+  const handleSelectClick = (val: Value) => {
     setIsVisible(false);
     onSelectClick(val);
     setInitialValue(val.name);
@@ -33,7 +37,10 @@ export const Select = ({ value, defaultValue, onSelectClick }: SelectProps) => {
           {value.map((item) => {
             return (
               <SelectMenu key={item.value}>
-                <SelectMenuButton onClick={() => handleSelectClick({ value: item.value, name: item.name })}>
+                <SelectMenuButton
+                  active={item.name === initialValue}
+                  onClick={() => handleSelectClick({ value: item.value, name: item.name })}
+                >
                   {item.name}
                 </SelectMenuButton>
               </SelectMenu>
@@ -58,6 +65,7 @@ const SelectButton = styled(Button)`
   width: 100%;
   height: 100%;
   padding: 10px;
+  color: ${({ theme }) => theme.color.main};
   &:hover {
     background-color: rgba(76, 117, 206, 0.1);
   }
@@ -74,10 +82,14 @@ const SelectList = styled.ul`
 `;
 
 const SelectMenu = styled.li``;
-const SelectMenuButton = styled(Button)`
+const SelectMenuButton = styled(Button)<{ active: boolean }>`
+  display: flex;
+  justify-content: flex-start;
   width: 100%;
   padding: 10px;
   &:hover {
     background-color: rgba(76, 117, 206, 0.1);
   }
+  color: ${({ active, theme }) => (active ? theme.color.main : theme.color.black)};
+  font-weight: ${({ active }) => (active ? 700 : 400)};
 `;

@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { Button, Select } from "~/views/components";
 import GnbUserBox from "~/views/components/Header/GnbHeader/GnbUserBox";
+import { roleSelectState } from "~/views/recoil/roleSelectState";
 
 type Role = "admin" | "manager" | "viewer" | "";
 interface IRoleSelect {
@@ -15,7 +16,7 @@ const dummySelectValue: IRoleSelect[] = [
   { name: "뷰어", value: "viewer" },
 ];
 const GnbHeader = () => {
-  const [roleSelect, setRoleSelect] = useState<Role>(dummySelectValue[0].value);
+  const [roleSelect, setRoleSelect] = useRecoilState<Role>(roleSelectState);
   const isAdminValue = roleSelect === "admin";
 
   const handleSelectClick = ({ value }: IRoleSelect) => {
@@ -31,7 +32,11 @@ const GnbHeader = () => {
       </HeaderLeft>
       <HeaderRight>
         <GnbUserBox />
-        <Select defaultValue={dummySelectValue[0]} value={dummySelectValue} onSelectClick={handleSelectClick} />
+        <Select<IRoleSelect>
+          defaultValue={dummySelectValue[0]}
+          value={dummySelectValue}
+          onSelectClick={handleSelectClick}
+        />
       </HeaderRight>
     </Header>
   );

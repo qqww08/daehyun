@@ -1,5 +1,5 @@
-import type { NextPageContext } from "next";
 import type { AppProps } from "next/app";
+import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 import { SWRConfig, type SWRConfiguration } from "swr";
 
@@ -18,10 +18,12 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   };
   return (
     <SWRConfig value={options}>
-      <ThemeProvider theme={themes}>
-        <GlobalStyles />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <RecoilRoot>
+        <ThemeProvider theme={themes}>
+          <GlobalStyles />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </RecoilRoot>
     </SWRConfig>
   );
 };
