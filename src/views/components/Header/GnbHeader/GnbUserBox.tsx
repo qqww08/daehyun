@@ -15,7 +15,7 @@ const GnbUserBox = () => {
   if (isLoading) return <div />;
   return (
     <UserBox>
-      <PopupButton onClick={handlePopupClick}>{meData.email}</PopupButton>
+      <PopupButton onClick={handlePopupClick}>{meData?.email}</PopupButton>
       {isPopupShow && <GnbHeaderUserPopup />}
     </UserBox>
   );

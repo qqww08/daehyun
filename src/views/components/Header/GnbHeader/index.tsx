@@ -1,7 +1,7 @@
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
-import { Button, Select } from "~/views/components";
+import { NextLink, Select } from "~/views/components";
 import GnbUserBox from "~/views/components/Header/GnbHeader/GnbUserBox";
 import { roleSelectState } from "~/views/recoil/roleSelectState";
 
@@ -27,8 +27,8 @@ const GnbHeader = () => {
     <Header>
       <HeaderLeft>
         <Logo>Wisebirds</Logo>
-        <ManuButton>캠페인</ManuButton>
-        {isAdminValue && <ManuButton>사용자</ManuButton>}
+        <ManuLink href={"/"}>캠페인</ManuLink>
+        {isAdminValue && <ManuLink href={"/users"}>사용자</ManuLink>}
       </HeaderLeft>
       <HeaderRight>
         <GnbUserBox />
@@ -65,7 +65,10 @@ const Logo = styled.h1`
   color: ${({ theme }) => theme.color.white};
 `;
 
-const ManuButton = styled(Button)`
+const ManuLink = styled(NextLink)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100px;
   height: 60px;
   color: ${({ theme }) => theme.color.white};

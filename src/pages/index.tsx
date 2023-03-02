@@ -1,6 +1,7 @@
 import type { GetStaticProps } from "next";
 
 export { default } from "~/views/pages/MainPage";
+
 export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {

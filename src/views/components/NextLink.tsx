@@ -46,7 +46,15 @@ export interface NextLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
    * When `false` `href` has to include the locale as the default behavior is disabled.
    */
 }
-const AnchorTag = ({ children, href, replace, scroll, prefetch, shallow, ...rest }: NextLinkProps) => {
+const AnchorTag = ({
+  children,
+  href,
+  replace,
+  scroll,
+  prefetch,
+  shallow,
+  ...rest
+}: NextLinkProps) => {
   return (
     <Link
       href={href}
